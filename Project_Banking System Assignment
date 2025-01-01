@@ -1,0 +1,122 @@
+from datetime import datetime
+
+# Create Account
+def create_account(name, initial_balance=0.0):
+    """Creates a new account with a name and initial balance."""
+    account = {
+        "name": name,
+        "balance": initial_balance,
+        "transactions": []
+    }
+    print(f"Account for {name} created with balance Rs{initial_balance}.")
+    return account
+
+
+# Deposit Money
+def deposit(account, amount):
+    """Deposits money into the account and records the transaction."""
+    if amount <= 0:
+        print("Deposit amount must be positive.")
+        return account
+
+    account['balance'] += amount
+    transaction = {
+        'type': "Deposit",
+        'amount': amount,
+        'timestamp': datetime.now(),
+        'new_balance': account['balance']
+    }
+    account['transactions'].append(transaction)
+    print(f"Deposited Rs{amount}. New balance: Rs{account['balance']}.")
+    return account
+
+
+# Withdraw Money
+def withdraw(account, amount):
+    """Withdraws money from the account if there are sufficient funds."""
+    if amount <= 0:
+        print("Withdrawal amount must be positive.")
+        return account
+    if amount > account['balance']:
+        print("Insufficient funds for withdrawal.")
+        return account
+
+    account['balance'] -= amount
+    transaction = {
+        'type': 'Withdrawal',
+        'amount': amount,
+        'timestamp': datetime.now(),
+        'new_balance': account['balance']
+    }
+    account['transactions'].append(transaction)
+    print(f"Withdrawn Rs{amount}. New balance: Rs{account['balance']}.")
+    return account
+
+
+# Check Balance
+def check_balance(account):
+    """Returns the current balance of the account."""
+    return account['balance']
+
+
+# Print Transaction Statement
+def print_statement(account):
+    """Prints a statement showing all transactions for the account."""
+    if not account['transactions']:
+        print("No transactions available.")
+        return
+    
+    print(f"\nAccount statement for {account['name']}:")
+    for transaction in account['transactions']:
+        timestamp = transaction['timestamp'].strftime('%Y-%m-%d %H:%M:%S')
+        print(f"{timestamp} - {transaction['type']}: Rs{transaction['amount']}. Balance after transaction: Rs{transaction['new_balance']}.")
+
+
+# Function to save transactions to a text file
+def save_transactions(account, filename='transactions.txt'):
+    """Saves the account's transaction list to a text file."""
+    with open(filename, 'a') as file:
+        file.write(f"\nAccount: {account['name']}\n")
+        for transaction in account['transactions']:
+            timestamp = transaction['timestamp'].strftime('%Y-%m-%d %H:%M:%S')
+            file.write(f"{timestamp} - {transaction['type']} of Rs{transaction['amount']}. New Balance: Rs{transaction['new_balance']}\n")
+
+
+# Function to load transactions from a text file
+def load_transactions(filename='transactions.txt'):
+    """Loads and displays transactions from the text file."""
+    try:
+        with open(filename, 'r') as file:
+            print(file.read())
+    except FileNotFoundError:
+        print("Transaction file not found.")
+
+
+# Main function to test all functionality
+def main():
+    # Create account for Syed Ahmed Ali
+    account = create_account("Syed Ahmed Ali", 15000)
+
+    # Deposit money
+    account = deposit(account, 5000)
+
+    # Withdraw money
+    account = withdraw(account, 2000)
+
+    # Check balance
+    print(f"Current balance: R{check_balance(account)}")
+
+    # Print transaction statement
+    print_statement(account)
+
+    # Save transactions to a file
+    save_transactions(account)
+
+    # Load and display transactions from the file
+    print("\nTransactions loaded from file:")
+    load_transactions()
+
+
+if __name__ == "__main__":
+    main()
+
