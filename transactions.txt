@@ -1,0 +1,12 @@
+
+Account: Syed Ahmed Ali
+2025-01-01 17:24:04 - Deposit of $500. New Balance: $1500
+2025-01-01 17:24:04 - Withdrawal of $200. New Balance: $1300
+
+Account: Syed Ahmed Ali
+2025-01-01 17:37:27 - Deposit of $5000. New Balance: $20000
+2025-01-01 17:37:27 - Withdrawal of $2000. New Balance: $18000
+
+Account: Syed Ahmed Ali
+2025-01-01 17:42:02 - Deposit of Rs5000. New Balance: Rs20000
+2025-01-01 17:42:02 - Withdrawal of Rs2000. New Balance: Rs18000
